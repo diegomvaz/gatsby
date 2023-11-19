@@ -1,17 +1,43 @@
-import * as React from "react"
+import * as React from 'react'
+import { Link, useStaticQuery, graphql } from 'gatsby'
 
-const IndexPage = () => {
+const BlogPage = () => {
+
+  const data = useStaticQuery(graphql`
+    query {
+      allMdx(sort: { frontmatter: { date: DESC } }) {
+        nodes {
+          frontmatter {
+            date(formatString: "MMMM D, YYYY")
+            title
+            slug
+          }
+          id
+          excerpt
+        }
+      }
+    }
+  `)
+
   return (
     <>
-      <h1>Olá Mundo Gatsby</h1>
-      <div>
-        <p>Esse é o primeiro parágrafo</p>
-        <p>Esse é o segundo parágrafo</p> 
-      </div>
-    </>
+      <p>Esses são os últimos posts:</p>
+      {
+        data.allMdx.nodes.map(node => (
+          <article key={node.id}>
+            <h2>
+              <Link to={`/cachorros/${node.frontmatter.slug}`}>
+                {node.frontmatter.title}
+              </Link>
+            </h2>
+            <p>Posted: {node.frontmatter.date}</p>
+          </article>
+        ))
+      }
+  </>
   )
 }
 
-export default IndexPage
+export const Head = () => <title>Posts</title>
 
-export const Head = () => <title>Início</title>
+export default BlogPage
