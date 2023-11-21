@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { Link, useStaticQuery, graphql } from 'gatsby'
-import { ChakraProvider, HStack, Wrap, WrapItem } from '@chakra-ui/react'
-import { Card, CardHeader, CardBody, Button, Text, Heading } from '@chakra-ui/react'
-import { GatsbyImage, getImage } from 'gatsby-plugin-image'
-
+import { useStaticQuery, graphql } from 'gatsby'
+import { ChakraProvider} from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react'
+import { ModalCadastrar } from '../../components/ModalCadastrar'
+import { GridRacas } from '../../components/GridRacas'
 
 const BlogPage = () => {
 
@@ -40,40 +40,18 @@ const BlogPage = () => {
       }
     }
   `)
-  
+
   return (
     <ChakraProvider>
-      <Wrap >
-        {
-          data.allMdx.nodes.map(node => (
-            <WrapItem>
-              <Card margin={5} width={250}>
-                <CardHeader>
-                  <HStack>
-                    <GatsbyImage
-                      image={getImage(node.frontmatter.hero_image_small)}
-                      imgStyle={{ borderRadius: '100%' }}
-                    />
-                    <Heading size='md'>{node.frontmatter.title}</Heading>
-                  </HStack>
-                </CardHeader>
-                <CardBody>
-                  <Text>{node.frontmatter.hero_image.hero_image_credit_text}</Text>
-                  <Link to={`/cachorros/${node.frontmatter.slug}`}>
-                    <Button variant='solid' colorScheme='blue'>
-                      Saiba mais
-                    </Button>
-                  </Link>
-                </CardBody>
-              </Card>
-            </WrapItem>
-          ))
-        }
-      </Wrap>
+      <Heading margin={5}>
+        Raças de Cachorro
+      </Heading>
+      <ModalCadastrar/>
+      <GridRacas {...data} />
     </ChakraProvider >
   )
 }
 
-export const Head = () => <title>Posts</title>
+export const Head = () => <title>Raças de Cachorro</title>
 
 export default BlogPage
