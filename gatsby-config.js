@@ -17,5 +17,12 @@ module.exports = {
         path: `${__dirname}/cachorros`,
       },
     },
+    {
+      resolve: '@chakra-ui/gatsby-plugin',
+      options: {
+        resetCSS: true,
+        portalZIndex: undefined,
+      },
+    },
   ],
 }

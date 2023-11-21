@@ -1,20 +1,32 @@
 import * as React from 'react'
-import { graphql } from 'gatsby'
+import { Link, graphql } from 'gatsby'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import { Card, Heading, Button} from '@chakra-ui/react'
 
 const Cachorro = ({ data, children }) => {
 
   const image = getImage(data.mdx.frontmatter.hero_image)
 
   return (
-    <>
-      <p>{data.mdx.frontmatter.date}</p>
+
+    <Card
+      margin={5}
+      width={400}
+      padding={3}
+    >
+      <Heading padding={3}>{data.mdx.frontmatter.title}</Heading>
       <GatsbyImage
         image={image}
         alt={data.mdx.frontmatter.hero_image_alt}
       />
       {children}
-    </>
+      <Link to={'/'}>
+        <Button marginTop={3} variant='solid' colorScheme='blue'>
+          Voltar
+        </Button>
+      </Link>
+    </Card>
+
   )
 }
 
